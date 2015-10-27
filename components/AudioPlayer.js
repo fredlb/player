@@ -47,15 +47,11 @@ export default class AudioPlayer extends Component {
   handleTimeUpdate() {
     var node = this.refs.audioPlayerNode;
     var currentTime = node.currentTime.toString();
-
-    console.log(currentTime);
   }
 
   handleProgress() {
     var node = this.refs.audioPlayerNode;
     var currentTime = node.currentTime.toString();
-
-    console.log(currentTime);
   }
 
   handleMediaEnd() {

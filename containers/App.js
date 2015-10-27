@@ -31,8 +31,7 @@ function mapStateToProps(state) {
   console.log(state);
   const { currentItem, items, itemsById } = state.audioItems;
   const selectedItems = items.map(id => itemsById[id]);
-  const currentItemById = itemsById[currentItem.id];
-  console.log(currentItemById);
+  const currentItemById = Object.assign({}, itemsById[currentItem.id]);
   currentItemById.isPlaying = currentItem.isPlaying;
   return {
     selectedItems,

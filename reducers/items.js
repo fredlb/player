@@ -28,6 +28,7 @@ export default function audioItems(state = initialState, action) {
   switch (action.type) {
     case PAUSE_PLAYBACK:
       // This is stupid, use the id array
+      console.log("PAUSE_PLAYBACK");
       return {
         ...state,
         itemsById: mapValues(state.itemsById, (item) => {
@@ -42,13 +43,20 @@ export default function audioItems(state = initialState, action) {
         }
       };
     case SELECT_ITEM:
-      return Object.assign({}, state, {
-        currentItem: { 
+      console.log("SELECT_ITEM");
+      return {
+        ...state,
+        itemsById: mapValues(state.itemsById, (item) => {
+          return item.id === action.id ?
+            Object.assign({}, item, { progress: action.progress}) :
+            item
+        }),
+        currentItem: {
           id: action.id,
-          isPlaying: true,
-          progress: action.progress
+          isPlaying: true, 
+          progress: action.progress,
         }
-      });
+      };
     default:
       return state;
   }
