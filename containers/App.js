@@ -12,7 +12,8 @@ class App extends Component {
     return (
         <div>
           <AudioPlayer track={currentTrack} 
-            buttonClick={actions.pausePlayback} />
+            buttonClick={actions.pausePlayback}
+            setTrackProgress={actions.setTrackProgress} />
           <ItemList 
             tracks={tracks}
             actions={actions}/>

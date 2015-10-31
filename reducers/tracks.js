@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { PAUSE_PLAYBACK } from '../actions';
+import { PAUSE_PLAYBACK, SET_TRACK_PROGRESS } from '../actions';
 
 const initialState = {
   ids: [1, 2],
@@ -22,6 +22,7 @@ const initialState = {
 function tracksById(
     state = initialState.tracksById, action) {
   switch (action.type) {
+    case SET_TRACK_PROGRESS:
     case PAUSE_PLAYBACK:
       const trackId = action.id;
       console.log(trackId);

@@ -12,6 +12,7 @@ export default class AudioPlayer extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.track.url !== this.props.track.url) {
+      this.props.setTrackProgress(prevProps.track.id, this.getCurrentTime());
       this.updateSource();
     }
 
@@ -59,7 +60,6 @@ export default class AudioPlayer extends Component {
   }
 
   updateIsPlaying() {
-    console.log("updateIsPlaying");
     var node = this.refs.audioPlayerNode,
         isPlaying  = this.props.track.isPlaying;
 
@@ -70,16 +70,19 @@ export default class AudioPlayer extends Component {
     }
   }
 
+  getCurrentTime() {
+    var node = this.refs.audioPlayerNode;
+    return node.currentTime;
+  }
+
   handlePlayPauseButton() {
     var node = this.refs.audioPlayerNode,
         track  = this.props.track;
-    console.log(track.id);
     this.props.buttonClick(track.id,
         node.currentTime, track.isPlaying);
   }
 
   updateSource() {
-    console.log("updateSource");
     var node = this.refs.audioPlayerNode,
         isPlaying  = this.props.track.isPlaying,
         progress  = this.props.track.progress;
@@ -94,7 +97,8 @@ export default class AudioPlayer extends Component {
 
 AudioPlayer.propTypes = {
   track: PropTypes.object.isRequired,
-  buttonClick: PropTypes.func.isRequired
+  buttonClick: PropTypes.func.isRequired,
+  setTrackProgress: PropTypes.func.isRequired
   //defaultTime: PropTypes.number,
   //onProgress: PropTypes.func.isRequired,
   //onTimeUpdate: PropTypes.func.isRequired,
