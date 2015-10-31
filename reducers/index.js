@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import audioItems from './items';
+import tracks from './tracks';
+import currentTrack from './currentTrack';
 
 const rootReducer = combineReducers({
-  audioItems
+  tracks,
+  currentTrack
 });
 
 export default rootReducer;

@@ -1,20 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as ItemActions from '../actions';
+import * as TrackActions from '../actions';
 import Progress from '../components/Progress';
 import AudioPlayer from '../components/AudioPlayer';
 import ItemList from '../components/ItemList';
 
 class App extends Component {
   render() {
-    const { actions, selectedItems, currentItem } = this.props;
+    const { actions, tracks, currentTrack } = this.props;
     return (
         <div>
-        {/*<PlaybackControl item={currentItem} actions={actions}/>*/}
-          <AudioPlayer item={currentItem} buttonClick={actions.pausePlayback}/>
+          <AudioPlayer track={currentTrack} 
+            buttonClick={actions.pausePlayback} />
           <ItemList 
-            items={selectedItems}
+            tracks={tracks}
             actions={actions}/>
         </div>
     );
@@ -22,26 +22,27 @@ class App extends Component {
 }
 
 App.propTypes = {
-  selectedItems: PropTypes.array.isRequired,
-  currentItem: PropTypes.object.isRequired,
+  tracks: PropTypes.array.isRequired,
+  currentTrack: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
+  const { currentTrack, tracks} = state;
+  const { ids, tracksById } = tracks;
+  const tracksArray = ids.map(id => tracksById[id]);
+  const currentTrackById = Object.assign({}, tracksById[currentTrack.id]);
+  currentTrackById.isPlaying = currentTrack.isPlaying;
   console.log(state);
-  const { currentItem, items, itemsById } = state.audioItems;
-  const selectedItems = items.map(id => itemsById[id]);
-  const currentItemById = Object.assign({}, itemsById[currentItem.id]);
-  currentItemById.isPlaying = currentItem.isPlaying;
   return {
-    selectedItems,
-    currentItem: currentItemById
+    tracks: tracksArray,
+    currentTrack: currentTrackById
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(ItemActions, dispatch)
+    actions: bindActionCreators(TrackActions, dispatch)
   };
 }
 

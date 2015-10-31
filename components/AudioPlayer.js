@@ -11,11 +11,11 @@ export default class AudioPlayer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.item.url !== this.props.item.url) {
+    if (prevProps.track.url !== this.props.track.url) {
       this.updateSource();
     }
 
-    if (prevProps.item.isPlaying !== this.props.item.isPlaying) {
+    if (prevProps.track.isPlaying !== this.props.track.isPlaying) {
       this.updateIsPlaying();
     }
   }
@@ -27,18 +27,18 @@ export default class AudioPlayer extends Component {
       width: '80%',
       border: 'solid 1px black'
     };
-    const { item, buttonClick } = this.props;
+    const { track, buttonClick } = this.props;
 
     return (
         <div style={style}>
           <audio preload="none" ref="audioPlayerNode">
-            <source src={item.url}
+            <source src={track.url}
               type="audio/mpeg" />
           </audio>
           <p>
-            {item.name}
+            {track.name}
           </p>
-          <input type="button" value={item.isPlaying ? "Pause" : "Play"}
+          <input type="button" value={track.isPlaying ? "Pause" : "Play"}
             onClick={() => this.handlePlayPauseButton()}/>
         </div>
     );
@@ -61,7 +61,7 @@ export default class AudioPlayer extends Component {
   updateIsPlaying() {
     console.log("updateIsPlaying");
     var node = this.refs.audioPlayerNode,
-        isPlaying  = this.props.item.isPlaying;
+        isPlaying  = this.props.track.isPlaying;
 
     if (isPlaying) {
       node.play();
@@ -72,16 +72,17 @@ export default class AudioPlayer extends Component {
 
   handlePlayPauseButton() {
     var node = this.refs.audioPlayerNode,
-        item  = this.props.item;
-    this.props.buttonClick(item.id,
-        node.currentTime, item.isPlaying);
+        track  = this.props.track;
+    console.log(track.id);
+    this.props.buttonClick(track.id,
+        node.currentTime, track.isPlaying);
   }
 
   updateSource() {
     console.log("updateSource");
     var node = this.refs.audioPlayerNode,
-        isPlaying  = this.props.item.isPlaying,
-        progress  = this.props.item.progress;
+        isPlaying  = this.props.track.isPlaying,
+        progress  = this.props.track.progress;
     node.pause();
     node.load();
     if (isPlaying) {
@@ -92,7 +93,7 @@ export default class AudioPlayer extends Component {
 }
 
 AudioPlayer.propTypes = {
-  item: PropTypes.object.isRequired,
+  track: PropTypes.object.isRequired,
   buttonClick: PropTypes.func.isRequired
   //defaultTime: PropTypes.number,
   //onProgress: PropTypes.func.isRequired,
@@ -101,5 +102,5 @@ AudioPlayer.propTypes = {
 };
 
 AudioPlayer.defaultProps = {
-  item: {}
+  track: {}
 };

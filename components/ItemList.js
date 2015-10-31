@@ -10,16 +10,16 @@ export default class ItemList extends Component {
       width: '80%',
       border: 'solid 1px black'
     };
-    const { items, actions } = this.props;
+    const { tracks, actions } = this.props;
     return (
         <div style={style}>
-          { items.map((item) =>
+          { tracks.map((track) =>
                 <Item
-                  key={item.id}
-                  id={item.id}
-                  name={item.name}
-                  url={item.url}
-                  progress={item.progress}
+                  key={track.id}
+                  id={track.id}
+                  name={track.name}
+                  url={track.url}
+                  progress={track.progress}
                   {...actions} />
             )}
         </div>
@@ -28,6 +28,6 @@ export default class ItemList extends Component {
 }
 
 ItemList.propTypes = {
-  items: PropTypes.array.isRequired,
+  tracks: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired
 };
