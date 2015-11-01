@@ -24,9 +24,33 @@ export default class AudioPlayer extends Component {
 
   render() {
     var style = {
-      padding: "5px",
-      border: 'solid 1px black'
+      margin: "auto",
+      width: "60%",
+      background: "white",
+      borderRadius: "2px",
+      boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)"
     };
+    var buttonStyle = {
+      padding: "5px",
+      color: "rgba(150,30,30,1)"
+    };
+    var trackTitleStyle = {
+      backgroundColor: "rgba(150,30,30,1)",
+      overflow: "hidden"
+    };
+    var trackNameStyle = {
+      margin: "3px",
+      color: "white"
+    };
+
+    var playerComponents = {
+      padding: "3%"
+    };
+
+    var progressBar = {
+      width: "75%"
+    };
+
     const { track, buttonClick } = this.props;
 
     return (
@@ -35,11 +59,15 @@ export default class AudioPlayer extends Component {
             <source src={track.url}
               type="audio/mpeg" />
           </audio>
-          <h5>
-            {track.name ? track.name : "No track selected"}
-          </h5>
-          <FontAwesome name={this.props.track.isPlaying ? "pause" : "play"}
-            size="2x" onClick={() => this.handlePlayPauseButton()}/>
+          <div style={trackTitleStyle}>
+            <h5 style={trackNameStyle}>
+              {track.name ? track.name : "No track selected"}
+            </h5>
+          </div>
+          <div style={playerComponents}>
+          <FontAwesome style={buttonStyle} name={this.props.track.isPlaying ? "pause" : "play"}
+          size="2x" onClick={() => this.handlePlayPauseButton()}/>
+          </div>
         </div>
     );
   }

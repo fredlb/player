@@ -2,9 +2,12 @@ import React, { Component, PropTypes } from 'react';
 
 export default class Item extends Component {
   render() {
+    var style = {
+      marginLeft: "3%"
+    };
     const {id, name, url, selectItem, progress } = this.props;
     return (
-      <div>
+      <div style={style}>
         <p onClick={() => selectItem(id, progress)}>
           {name} Progess: {progress}
         </p>

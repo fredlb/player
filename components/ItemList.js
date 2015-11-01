@@ -5,10 +5,12 @@ import Item from './Item';
 export default class ItemList extends Component {
   render() {
     var style = {
-      marginTop: '5%',
-      padding: '5px',
-      width: '80%',
-      border: 'solid 1px black'
+      margin: "auto",
+      marginTop: "10px",
+      width: '60%',
+      background: "white",
+      boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+      borderRadius: "2px"
     };
     const { tracks, actions } = this.props;
     return (

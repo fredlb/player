@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import App from './containers/App';
 import rootReducer from './reducers';
 import 'font-awesome-webpack';
+import './static/main.css';
 
 let store = createStore(rootReducer);
 

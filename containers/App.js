@@ -9,7 +9,8 @@ import ItemList from '../components/ItemList';
 class App extends Component {
   render() {
     var style = {
-      height: "300px"
+      display: "flex",
+      flexDirection: "column"
     };
     const { actions, tracks, currentTrack } = this.props;
     return (
