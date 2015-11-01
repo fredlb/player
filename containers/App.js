@@ -8,9 +8,12 @@ import ItemList from '../components/ItemList';
 
 class App extends Component {
   render() {
+    var style = {
+      height: "300px"
+    };
     const { actions, tracks, currentTrack } = this.props;
     return (
-        <div>
+        <div style={style}>
           <AudioPlayer track={currentTrack} 
             buttonClick={actions.pausePlayback}
             setTrackProgress={actions.setTrackProgress} />

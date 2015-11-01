@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import FontAwesome from 'react-fontawesome';
 
 export default class AudioPlayer extends Component {
   componentDidMount() {
@@ -23,9 +24,7 @@ export default class AudioPlayer extends Component {
 
   render() {
     var style = {
-      marginTop: '5%',
-      padding: '5px',
-      width: '80%',
+      padding: "5px",
       border: 'solid 1px black'
     };
     const { track, buttonClick } = this.props;
@@ -36,11 +35,11 @@ export default class AudioPlayer extends Component {
             <source src={track.url}
               type="audio/mpeg" />
           </audio>
-          <p>
-            {track.name}
-          </p>
-          <input type="button" value={track.isPlaying ? "Pause" : "Play"}
-            onClick={() => this.handlePlayPauseButton()}/>
+          <h5>
+            {track.name ? track.name : "No track selected"}
+          </h5>
+          <FontAwesome name={this.props.track.isPlaying ? "pause" : "play"}
+            size="2x" onClick={() => this.handlePlayPauseButton()}/>
         </div>
     );
   }

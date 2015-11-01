@@ -8,9 +8,6 @@ export default class Item extends Component {
         <p onClick={() => selectItem(id, progress)}>
           {name} Progess: {progress}
         </p>
-        <p>
-          {url}
-        </p>
       </div>
     );
   }
