@@ -6,9 +6,9 @@ class Item extends Component {
     const {id, name, url, selectItem, progress } = this.props;
     return (
       <div style={styles.base}>
-        <p onClick={() => selectItem(id, progress)}>
+        <div onClick={() => selectItem(id, progress)}>
           {name} Progess: {progress}
-        </p>
+        </div>
       </div>
     );
   }
@@ -17,6 +17,8 @@ class Item extends Component {
 var styles = {
   base: {
     background: '#fff',
+    cursor: "pointer",
+    padding: "3%",
     ':hover': {
       background: '#aaa'
     }

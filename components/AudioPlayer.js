@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
+import moment from 'moment';
 import FontAwesome from 'react-fontawesome';
 
 export default class AudioPlayer extends Component {
   componentDidMount() {
     var node = this.refs.audioPlayerNode;
     node.addEventListener('progress', this.handleProgress());
-    node.addEventListener('timeupdate', this.handleTimeUpdate());
+    node.addEventListener('timeupdate', (() => this.handleTimeUpdate()));
     node.addEventListener('ended', this.handleMediaEnd());
 
     this.updateIsPlaying();
@@ -32,6 +33,8 @@ export default class AudioPlayer extends Component {
     };
     var buttonStyle = {
       padding: "5px",
+      width: "5%",
+      cursor: "pointer",
       color: "rgba(150,30,30,1)"
     };
     var trackTitleStyle = {
@@ -48,7 +51,22 @@ export default class AudioPlayer extends Component {
     };
 
     var progressBar = {
-      width: "75%"
+      backgroundColor: "#aaa",
+      display: "inline-block",
+      height: "20px"
+    };
+
+    var progressContainer = {
+      marginLeft: "5px",
+      width: "70%",
+      height: "20px",
+      backgroundColor: "#eee",
+      display: "inline-block"
+    };
+
+    var progressTime = {
+      marginLeft: "10%",
+      display: "inline-block"
     };
 
     const { track, buttonClick } = this.props;
@@ -65,8 +83,13 @@ export default class AudioPlayer extends Component {
             </h5>
           </div>
           <div style={playerComponents}>
-          <FontAwesome style={buttonStyle} name={this.props.track.isPlaying ? "pause" : "play"}
-          size="2x" onClick={() => this.handlePlayPauseButton()}/>
+            <FontAwesome style={buttonStyle}
+              name={this.props.track.isPlaying ? "pause" : "play"}
+              size="2x" onClick={() => this.handlePlayPauseButton()}/>
+              <div style={progressContainer}>
+                <span style={progressBar} ref={"progress"}/>
+              </div>
+              <div ref={"progressTime"} style={progressTime}></div>
           </div>
         </div>
     );
@@ -74,12 +97,18 @@ export default class AudioPlayer extends Component {
 
   handleTimeUpdate() {
     var node = this.refs.audioPlayerNode;
-    var currentTime = node.currentTime.toString();
+    var value = 0;
+    console.log(Math.floor(node.currentTime));
+    if (node.currentTime > 0) {
+      value = Math.floor((100 / node.duration) * node.currentTime);
+    }
+    this.refs.progress.style.width = value + "%";
+    var seconds = Math.floor(node.currentTime);
+    var minutes = Math.floor(seconds/60);
+    this.refs.progressTime.innerHTML = minutes + " : " + seconds % 60;
   }
 
   handleProgress() {
-    var node = this.refs.audioPlayerNode;
-    var currentTime = node.currentTime.toString();
   }
 
   handleMediaEnd() {

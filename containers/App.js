@@ -10,7 +10,8 @@ class App extends Component {
   render() {
     var style = {
       display: "flex",
-      flexDirection: "column"
+      flexDirection: "column",
+      alignItems: "center",
     };
     const { actions, tracks, currentTrack } = this.props;
     return (
