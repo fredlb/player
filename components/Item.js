@@ -20,7 +20,7 @@ var styles = {
     cursor: "pointer",
     padding: "3%",
     ':hover': {
-      background: '#aaa'
+      background: '#eee'
     }
   }
 };

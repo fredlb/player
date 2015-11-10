@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import FontAwesome from 'react-fontawesome';
+import { secondsToMMSS } from '../util';
 
 export default class AudioPlayer extends Component {
   componentDidMount() {
@@ -32,8 +33,7 @@ export default class AudioPlayer extends Component {
       boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)"
     };
     var buttonStyle = {
-      padding: "5px",
-      width: "5%",
+      flexGrow: "1",
       cursor: "pointer",
       color: "rgba(150,30,30,1)"
     };
@@ -47,26 +47,27 @@ export default class AudioPlayer extends Component {
     };
 
     var playerComponents = {
-      padding: "3%"
+      padding: "3%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
     };
 
     var progressBar = {
       backgroundColor: "#aaa",
       display: "inline-block",
-      height: "20px"
     };
 
     var progressContainer = {
-      marginLeft: "5px",
-      width: "70%",
-      height: "20px",
+      flexGrow: "7",
       backgroundColor: "#eee",
       display: "inline-block"
     };
 
     var progressTime = {
-      marginLeft: "10%",
-      display: "inline-block"
+      flexGrow: "1",
+      display: "inline-block",
+      textAlign: "right",
     };
 
     const { track, buttonClick } = this.props;
@@ -103,9 +104,7 @@ export default class AudioPlayer extends Component {
       value = Math.floor((100 / node.duration) * node.currentTime);
     }
     this.refs.progress.style.width = value + "%";
-    var seconds = Math.floor(node.currentTime);
-    var minutes = Math.floor(seconds/60);
-    this.refs.progressTime.innerHTML = minutes + " : " + seconds % 60;
+    this.refs.progressTime.innerHTML = secondsToMMSS(node.currentTime);
   }
 
   handleProgress() {
