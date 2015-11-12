@@ -1,14 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
+import CSSModules from 'react-css-modules';
 import FontAwesome from 'react-fontawesome';
 import { secondsToMMSS } from '../util';
+import ProgressBar from './ProgressBar';
+import PlayPauseButton from './PlayPauseButton';
+import cssStyles from './AudioPlayer.css';
 
-export default class AudioPlayer extends Component {
+class AudioPlayer extends Component {
   componentDidMount() {
     var node = this.refs.audioPlayerNode;
-    node.addEventListener('progress', this.handleProgress());
     node.addEventListener('timeupdate', (() => this.handleTimeUpdate()));
-    node.addEventListener('ended', this.handleMediaEnd());
 
     this.updateIsPlaying();
   }
@@ -25,72 +27,27 @@ export default class AudioPlayer extends Component {
   }
 
   render() {
-    var style = {
-      margin: "auto",
-      width: "60%",
-      background: "white",
-      borderRadius: "2px",
-      boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)"
-    };
-    var buttonStyle = {
-      flexGrow: "1",
-      cursor: "pointer",
-      color: "rgba(150,30,30,1)"
-    };
-    var trackTitleStyle = {
-      backgroundColor: "rgba(150,30,30,1)",
-      overflow: "hidden"
-    };
-    var trackNameStyle = {
-      margin: "3px",
-      color: "white"
-    };
-
-    var playerComponents = {
-      padding: "3%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center"
-    };
-
-    var progressBar = {
-      backgroundColor: "#aaa",
-      display: "inline-block",
-    };
-
-    var progressContainer = {
-      flexGrow: "7",
-      backgroundColor: "#eee",
-      display: "inline-block"
-    };
-
-    var progressTime = {
-      flexGrow: "1",
-      display: "inline-block",
-      textAlign: "right",
-    };
-
     const { track, buttonClick } = this.props;
 
     return (
-        <div style={style}>
+        <div styleName="container">
           <audio preload="none" ref="audioPlayerNode">
             <source src={track.url}
               type="audio/mpeg" />
           </audio>
-          <div style={trackTitleStyle}>
-            <h5 style={trackNameStyle}>
+          <div styleName="track-title">
               {track.name ? track.name : "No track selected"}
-            </h5>
           </div>
-          <div style={playerComponents}>
-            <FontAwesome style={buttonStyle}
-              name={this.props.track.isPlaying ? "pause" : "play"}
-              size="2x" onClick={() => this.handlePlayPauseButton()}/>
-              <div style={progressContainer}>
-                <span style={progressBar} ref={"progress"}/>
-              </div>
-              <div ref={"progressTime"} style={progressTime}></div>
+          <div styleName="player-components">
+            <div styleName="button">
+              <PlayPauseButton isPlaying={track.isPlaying}
+                onClick={() => this.handlePlayPauseButton()}
+              />
+            </div>
+            <div styleName="progress-bar">
+              <ProgressBar progress ref={"progressBar"}/>
+            </div>
+            <div ref={"progressTime"} styleName="progress-time"/>
           </div>
         </div>
     );
@@ -99,19 +56,11 @@ export default class AudioPlayer extends Component {
   handleTimeUpdate() {
     var node = this.refs.audioPlayerNode;
     var value = 0;
-    console.log(Math.floor(node.currentTime));
     if (node.currentTime > 0) {
       value = Math.floor((100 / node.duration) * node.currentTime);
     }
-    this.refs.progress.style.width = value + "%";
+    this.refs.progressBar.setProgress(value);
     this.refs.progressTime.innerHTML = secondsToMMSS(node.currentTime);
-  }
-
-  handleProgress() {
-  }
-
-  handleMediaEnd() {
-
   }
 
   updateIsPlaying() {
@@ -154,12 +103,10 @@ AudioPlayer.propTypes = {
   track: PropTypes.object.isRequired,
   buttonClick: PropTypes.func.isRequired,
   setTrackProgress: PropTypes.func.isRequired
-  //defaultTime: PropTypes.number,
-  //onProgress: PropTypes.func.isRequired,
-  //onTimeUpdate: PropTypes.func.isRequired,
-  //onEnd: PropTypes.func.isRequired
 };
 
 AudioPlayer.defaultProps = {
   track: {}
 };
+
+export default CSSModules(AudioPlayer, cssStyles);

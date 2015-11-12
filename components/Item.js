@@ -1,29 +1,24 @@
 import React, { Component, PropTypes } from 'react';
-import Radium from 'radium';
+import CSSModules from 'react-css-modules';
+import styles from './Item.css';
 
 class Item extends Component {
   render() {
     const {id, name, url, selectItem, progress } = this.props;
     return (
-      <div style={styles.base}>
-        <div onClick={() => selectItem(id, progress)}>
-          {name} Progess: {progress}
+      <div styleName="item">
+        <div ref="item" styleName="name"
+          onClick={() => selectItem(id, progress)}>
+            {name} 
+        </div>
+        <div styleName="progress">
+          Progess: {progress}
         </div>
       </div>
     );
   }
 }
 
-var styles = {
-  base: {
-    background: '#fff',
-    cursor: "pointer",
-    padding: "3%",
-    ':hover': {
-      background: '#eee'
-    }
-  }
-};
 
 Item.propTypes = {
   id: PropTypes.number.isRequired,
@@ -33,4 +28,4 @@ Item.propTypes = {
   selectItem: PropTypes.func.isRequired
 };
 
-export default Radium(Item);
+export default CSSModules(Item, styles);

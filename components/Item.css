@@ -1,0 +1,22 @@
+.item {
+  background-color: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2%;
+}
+
+.item:hover {
+  background-color: #aaa;
+}
+
+.name {
+  display: inline-block;
+  flex: 1;
+}
+
+.progress {
+  compose: name;
+  text-align: right;
+}

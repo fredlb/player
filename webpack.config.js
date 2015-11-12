@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -13,6 +14,9 @@ module.exports = {
     publicPath: '/static/',
   },
   plugins: [
+    new ExtractTextPlugin('app.css', {
+      allChunks: true
+    }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
@@ -25,7 +29,7 @@ module.exports = {
       include: __dirname
     }, {
       test: /\.css?$/,
-      loaders: ['style', 'raw'],
+      loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'),
       include: __dirname
     }, { 
       test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

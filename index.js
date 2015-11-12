@@ -6,7 +6,7 @@ import App from './containers/App';
 import rootReducer from './reducers';
 import configureStore from './store/configureStore';
 import 'font-awesome-webpack';
-import './static/main.css';
+import './global.css';
 
 const store = configureStore();
 
