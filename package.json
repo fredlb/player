@@ -2,6 +2,12 @@
   "name": "player",
   "version": "0.0.0",
   "description": "React/Redux html5 sound player",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fredlb/player.git"
+  },
+  "author": "Fredrik Lindner <fredrik.lindner@gmail.com>",
+  "license": "MIT",
   "scripts": {
     "start": "node server.js"
   },
